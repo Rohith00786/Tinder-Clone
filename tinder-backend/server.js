@@ -2,11 +2,17 @@ import express from "express";
 import mongoose from "mongoose";
 import Cards from "./dbcards.js";
 import cors from "cors";
+import "dotenv/config";
 
 //App config
 const app = express();
 const port = process.env.PORT || 8001;
-const connection_url = 'mongodb+srv://sesharohith99_db_user:HpnLvFsgd8iQBOjI@cluster0.ogecotf.mongodb.net/tinderdb'
+const connection_url = process.env.MONGODB_URI;
+
+if (!connection_url) {
+    console.error("MONGODB_URI is missing. Create a .env file (see .env.example).");
+    process.exit(1);
+}
 //Middleware
 app.use(express.json());
 app.use(cors());
