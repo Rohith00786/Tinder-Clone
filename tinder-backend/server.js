@@ -29,25 +29,21 @@ mongoose.connect(process.env.MONGODB_URI)
 
 //API endpoints
 app.get("/", (req, res) => res.status(200).send("Hello Rohith"));
-app.post("/tinder/card", (req, res) => {
-    const dbCard = new Card(req.body);
-    
-    Cards.create(dbCard, (err, data) => {
-        if (err) {
-            res.status(500).send(err);
-        } else {
-            res.status(201).send(data);
-        }
-    });
+app.post("/tinder/card", async (req, res) => {
+    try {
+        const dbCard = await Cards.create(req.body);
+        res.status(201).send(dbCard);
+    } catch (err) {
+        res.status(500).send(err);
+    }
 });
-app.get("/tinder/cards", (req, res) => {
-    Cards.find((err, data) => {
-        if (err) {
-            res.status(500).send(err);
-        } else {
-            res.status(200).send(data);
-        }
-    });
+app.get("/tinder/cards", async (req, res) => {
+    try {
+        const data = await Cards.find();
+        res.status(200).send(data);
+    } catch (err) {
+        res.status(500).send(err);
+    }
 });
 
 //Listener

@@ -89,7 +89,7 @@ function TinderCards() {
                 {people.map((person) => (
                     <TinderCard
                         className="swipe"
-                        key={person.name}
+                        key={person._id || person.name}
                         preventSwipe={["up", "down"]}
                         onSwipe={(dir) => swiped(dir, person.name)}
                         onCardLeftScreen={() => outOfFrame(person.name)}
@@ -97,7 +97,7 @@ function TinderCards() {
                         <div
                             className="card"
                             style={{
-                                backgroundImage: `url("${person.imgUrl}")`
+                                backgroundImage: `url("${person.imgUrl || person.url}")`
                             }}
                         >
                             <h3>{person.name}</h3>
